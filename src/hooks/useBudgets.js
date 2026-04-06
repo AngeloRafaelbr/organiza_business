@@ -10,15 +10,10 @@ export default function useBudgets() {
 
      useEffect(() => {
      const fetchBudgets = async () => {
-            const email = localStorage.getItem("userEmail");
-
-            if (!email) {
-                console.warn("Email do usuário não encontrado no localStorage.");
-                return;
-            }
-
+            
             try {
-                const res = await fetch(`/api/budget/budgetFind?email=${encodeURIComponent(email)}`, {
+                // MUDANÇA: removido email da URL — a API agora lê do to
+                const res = await fetch(`/api/budget/budgetFind`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -66,9 +61,9 @@ export default function useBudgets() {
             headers: {
                 "Content-Type": "application/json",
             },
+            // MUDANÇA: removido email do body — a API lê do token JWT
             body: JSON.stringify({
-                dados: dadosBudget,
-                email: email,
+                dados: dadosBudget
             }),
         });
 

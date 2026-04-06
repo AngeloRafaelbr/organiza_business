@@ -12,14 +12,8 @@ export default function useIncomeHome() {
     useEffect(() => {
   const fetchData = async () => {
       
-    const email = localStorage.getItem("userEmail");
-        if (email) {
-            const dadosSalvos = JSON.parse(localStorage.getItem(`Financeiro_${email}`)) ?? [];
-        }
-        
-
     try {
-      const res= await fetch(`/api/transaction/transactionFind?email=${encodeURIComponent(email)}`, {
+      const res= await fetch(`/api/transaction/transactionFind`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -68,10 +62,7 @@ console.log("Estado dadosFin atualizado:", dadosFin);
         const data = [...dadosFin, dados];
         setDadosFin(data);
         setAtualizaGrid(!atualizaGrid);
-        const email = localStorage.getItem("userEmail");
-        if (email) {
-            localStorage.setItem(`Financeiro_${email}`, JSON.stringify(data));
-        }
+        // MUDANÇA: removido o localStorage.setItem — banco é a fonte de verdade
     }
 
     async function onDelete(index) {
@@ -80,7 +71,7 @@ console.log("Estado dadosFin atualizado:", dadosFin);
         data.splice(index, 1);
         setDadosFin(data);
         setAtualizaGrid(!atualizaGrid);
-        const email = localStorage.getItem("userEmail");
+        // MUDANÇA: removido email do body — a API lê do token JWT
 
         await fetch('/api/transaction/transactionDelete', {
           method: 'DELETE',
@@ -88,8 +79,7 @@ console.log("Estado dadosFin atualizado:", dadosFin);
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            id: id,
-            email: email
+            id: id
 }),
 });
     router.refresh();

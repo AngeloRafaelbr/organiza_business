@@ -86,26 +86,24 @@ export default function useIncomeForm() {
             income,
             tipo,
         };
-
-         const email = localStorage.getItem("userEmail");
     
         //para debug (console navegador)
         //console.log(email)
 
         try {
-                const res = await fetch("/api/transaction/transactionCreate", {
+                await fetch("/api/transaction/transactionCreate", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    // MUDANÇA: removido email do body — a API lê do token JWT
                     body: JSON.stringify({
-                    dados: {...dadosFinanceiro},
-                    email: email
+                    dados: {...dadosFinanceiro}
 }),
                 });
                 router.refresh();
             } catch (error) {
-                setError("Um erro ocorreu. Por favor tente de novo.");
+                console.error("Um erro ocorreu:", error);
             }
 
 

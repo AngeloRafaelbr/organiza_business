@@ -11,11 +11,10 @@ export default function useInvestments() {
 
     useEffect(() => {
   const fetchInvestments = async () => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) return;
 
     try {
-      const res = await fetch(`/api/investment/investmentFind?email=${encodeURIComponent(email)}`, {
+      // MUDANÇA: removido email da URL — a API agora lê do token JWT
+      const res = await fetch(`/api/investment/investmentFind`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -47,12 +46,6 @@ export default function useInvestments() {
     const handleAddInvestment = async (e) => {
   e.preventDefault();
 
-  const email = localStorage.getItem("userEmail");
-  if (!email) {
-    alert("Usuário não autenticado.");
-    return;
-  }
-
   const newInvestment = {
     type,
     value: parseFloat(value),
@@ -68,9 +61,9 @@ export default function useInvestments() {
       headers: {
         "Content-Type": "application/json",
       },
+      // MUDANÇA: removido email do body — a API lê do token JWT
       body: JSON.stringify({
-        email,
-        dados: newInvestment,
+        dados: newInvestment
       }),
     });
 
@@ -92,19 +85,15 @@ export default function useInvestments() {
 
 
     const handleDeleteInvestment = async (id) => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) {
-        console.error("Usuário não autenticado.");
-        return;
-    }
-
+    
     try {
         const response = await fetch('/api/investment/investmentDelete', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id, email }),
+            // MUDANÇA: removido email do body — a API lê do token JWT
+            body: JSON.stringify({ id }),
         });
 
         const data = await response.json();
