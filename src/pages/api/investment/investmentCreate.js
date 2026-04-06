@@ -1,6 +1,7 @@
 // src/pages/api/investment/investmentCreate.js
 
 import { PrismaClient } from '@prisma/client';
+import { requireAuth } from '@/middleware/auth';
 
 const prisma = new PrismaClient();
 
@@ -9,18 +10,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
+
   try {
     //para debug (console aplicação node)
     //console.log("REQ.BODY - test for investmentCreate");
     //console.log(req.body);
 
     const dadosInvest = req.body.dados;
-    const email = req.body.email;
 
-    if (!email) {
-      return res.status(400).json({ error: 'Email é obrigatório.' });
-    }
-
+    const email = decoded.email; // email do usuário autenticado
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (!existingUser) {

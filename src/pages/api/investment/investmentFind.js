@@ -9,8 +9,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
+
   try {
-    const { email } = req.query; // pega o email da query string
+    const email = decoded.email; // email do usuário autenticado
 
     if (!email) {
       return res.status(400).json({ error: 'Email é obrigatório' });

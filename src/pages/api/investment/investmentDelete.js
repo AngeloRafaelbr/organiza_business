@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { requireAuth } from '@/middleware/auth';
 
 const prisma = new PrismaClient();
 
@@ -7,13 +8,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
+
   try {
-    const { id, email } = req.body; // ID do investimento e email do usuário
+    const { id } = req.body; // ID do investimento
 
     if (!id) {
       return res.status(400).json({ error: 'ID do investimento é obrigatório.' });
     }
 
+    const email = decoded.email; // email do usuário autenticado
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (!existingUser) {
