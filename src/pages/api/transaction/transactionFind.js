@@ -1,6 +1,7 @@
 // src/pages/api/transaction/transactionFind.js
 
 import { PrismaClient } from '@prisma/client';
+import { requireAuth } from '@/middleware/auth';
 
 const prisma = new PrismaClient();
 
@@ -9,13 +10,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return; // requireAuth já respondeu com 401
+
   try {
 
-  const { email } = req.query; // <-- Aqui é onde você acessa os parâmetros da URL
+    const email = decoded.email; // pega o email do token
 
-    if (!email) {
-      return res.status(400).json({ error: 'Email é obrigatório' });
-    }
+    // Encontra o usuário pelo email
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (!existingUser) {

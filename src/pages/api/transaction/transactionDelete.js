@@ -9,6 +9,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+  // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
+
   try {
     const { id } = req.body; // ID da transação a ser deletada
 
@@ -21,6 +25,21 @@ export default async function handler(req, res) {
     const transaction = await prisma.transaction.findUnique({
       where: { id },
     });
+
+
+        if (!transaction) {
+            return res.status(404).json({ error: 'Transação não encontrada.' });
+        }
+
+        // MUDANÇA: busca o usuário pelo token e verifica se é dono da transação
+        const existingUser = await prisma.user.findUnique({
+            where: { email: decoded.email }
+        });
+
+        if (transaction.userId !== existingUser.id) {
+            return res.status(403).json({ error: 'Você não tem permissão para deletar esta transação.' });
+        }
+
 
     // Deleta a transação
     await prisma.transaction.delete({

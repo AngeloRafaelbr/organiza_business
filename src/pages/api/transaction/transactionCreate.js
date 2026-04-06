@@ -1,6 +1,7 @@
 // src/pages/api/transaction/transactionCreate.js
 
 import { PrismaClient } from '@prisma/client';
+import { requireAuth } from '@/middleware/auth';
 
 const prisma = new PrismaClient();
 
@@ -8,6 +9,10 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
+
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return; // requireAuth já respondeu com 401
 
   try {
     //para debug (console aplicação node)
@@ -19,8 +24,9 @@ export default async function handler(req, res) {
     //para debug (console aplicação node)
     //console.log("dadosFin- test for transactionCreate")
     //console.log(dadosFin)
-
-    const existingUser = await prisma.user.findUnique({ where: { email: req.body.email } });
+    
+    const email = decoded.email; // pega o email do token
+    const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (!existingUser) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });

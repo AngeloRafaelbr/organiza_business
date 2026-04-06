@@ -2,24 +2,32 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-export function verifyToken(req, res, next) {
-    const authHeader = req.headers.authorization;
+// Lê o token do cookie da requisição
+export function getTokenFromCookie(req) {
+    const cookieHeader = req.headers.cookie || '';
+    const cookies = Object.fromEntries(
+        cookieHeader.split(';').map(c => {
+            const [key, ...val] = c.trim().split('=');
+            return [key, val.join('=')];
+        })
+    );
+    return cookies['token'] || null;
+}
 
-    if (!authHeader) {
-        return res.status(401).json({ message: 'Nenhum token fornecido' })
-    }
-
-    const token = authHeader.split(' ')[1];
+// Middleware principal — use no início de cada API
+// Retorna o payload do token ({ userId, email }) ou null se inválido
+export function requireAuth(req, res) {
+    const token = getTokenFromCookie(req);
 
     if (!token) {
-        return res.status(401).json({ message: 'Token está faltando' });
+        res.status(401).json({ message: 'Não autenticado.' });
+        return null;
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded; //Anexa os dados do usuário à requisição
-        next(); //Passa para a próxima função
-    } catch (error) {
-        return res.status(401).json({message: 'Token inválido'});
+        return jwt.verify(token, JWT_SECRET); // retorna { userId, email }
+    } catch {
+        res.status(401).json({ message: 'Token inválido ou expirado.' });
+        return null;
     }
 }
