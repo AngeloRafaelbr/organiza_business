@@ -1,0 +1,73 @@
+
+  
+  /* Contêiner do formulário */
+  .container {
+    margin: 15px auto;
+    padding: 10px;
+    background: gray;
+    border-radius: 5px;
+    border: 2px solid blue;
+    max-width: 90%;
+    box-sizing: border-box;
+    
+  }
+  
+  /* Formulário */
+  .form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que os elementos vão para a linha de baixo */
+    gap: 1em; /* Espaço entre os elementos */
+    width: 100%;
+  }
+  
+  /* Elementos de input, select e botão */
+  .inputForm input,
+  .inputForm select,
+  .inputForm button {
+    flex: 1;
+    min-width: 120px;
+    max-width: 100%; /* Ajuste para caber no contêiner */
+    margin: 0.5em; /* Espaçamento entre as linhas de inputs */
+    padding: 5px; /* Padding interno para melhor visualização */
+  }
+  
+  /* Ajuste do RadioGroup */
+  .RadioGroup {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 0.5em;
+    max-width: 100%;
+  }
+  
+  /* Dropdown de seleção de categoria */
+  .selectCategoria {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    color: black;
+  }
+  
+  /* Campo de input */
+  .inputField {
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    color: black;
+    max-width: calc(33% - 1em); /* Ajuste para caber no contêiner */
+  }
+  
+  @media (max-width: 600px) {
+    .inputForm input,
+    .inputForm select,
+    .inputForm button {
+      max-width: 100%; /* Para ocupar toda a largura da tela */
+      flex-basis: 100%; /* Ocupa uma linha inteira */
+    }
+  }

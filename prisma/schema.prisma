@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+provider = "mysql"
+url      = env("DATABASE_URL")  //TROCAR "db" por "localhost" se rodar na própria máquina sem container.
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//Para implementação futura com login (user)
+model User {
+  id         String        @id @default(uuid())
+  name       String
+  email      String        @unique
+  password   String
+  createAt   DateTime      @default(now())
+  transactions Transaction[]  // ← relação 1:N
+  Budgets Budget[]
+  investments  Investment[]   // ← Relação com investimentos
+}
+
+model Transaction {
+  id         Int       @id @default(autoincrement())
+  data       DateTime
+  tipo       Int       // 0 para income, 1 para spent
+  categoria  String
+  descricao  String
+  valor      Float
+  createdAt  DateTime  @default(now())
+
+  // Relação com User
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Budget {
+  id              Int      @id @default(autoincrement())
+  categoria       String
+  valorPlanejado  Float
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relação com User
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Investment {
+  id           Int      @id @default(autoincrement())
+  type         String   // Tipo do investimento (ex: "CDB", "Ações", etc.)
+  value        Float    // Valor investido
+  institution  String   // Nome da instituição financeira
+  growthTax    Float    // Taxa de crescimento prevista ou real
+  growth       Float    // Crescimento atual ou total
+  date         DateTime // Data do investimento
+  createdAt    DateTime @default(now())
+
+  // Relação com User
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+}

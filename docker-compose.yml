@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: organiza
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextjs-organiza_evolution-app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: mysql://root:root123@db:3306/organiza
+      JWT_SECRET: "senhaDoJWTQueDeveriaSerBemForte"
+      NEXT_PUBLIC_BASE_URL: http://localhost:3000
+      # Para funcionar dentro do container (pois localhost dentro do container pode ser diferente):
+      SERVER_URL: http://app:3000  # Usar o nome do serviço
+    depends_on:
+      db:
+        condition: service_healthy
+    
+
+volumes:
+  mysql-data:

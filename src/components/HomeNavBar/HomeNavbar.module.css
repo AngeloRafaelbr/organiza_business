@@ -1,0 +1,146 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, var(--background), var(--gradient));
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navLinks {
+    display: flex;
+    list-style: none;
+}
+
+.navLinks li {
+    margin: 0 15px;
+    font-size: 1.2rem;
+}
+
+.navLinks li a:hover {
+    color: var(--green);
+}
+
+.navLinks a {
+    text-decoration: none;
+    color: var(--zinc-700);
+}
+
+.authLinks {
+    display: flex;
+    gap: 15px;
+}
+
+.authLinks a {
+    color: white;
+    text-decoration: none;
+}
+
+.loginButton {
+    background-color: var(--green);
+    padding: 5px  10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.registerButton {
+    background-color: var(--blue);
+    padding: 5px  10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.registerButton:hover, .loginButton:hover {
+    opacity: 0.8;
+}
+
+.menuToggle {
+    display: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.1rem;
+}
+
+.menuIcon {
+    font-size: 1.8rem;
+    color: var(--zinc-700);
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo {
+        font-size: 2rem;
+        margin: 0.5rem;
+    }
+
+    .navLinks {
+        flex-direction: column;
+        margin: 0.5rem;
+        display: none;
+    }
+
+    .navLinks.active {
+        display: flex;
+    }
+
+    .navLinks li {
+        margin: 0.5rem 0;
+        font-size: 1rem;
+    }
+
+    .authLinks {
+        display: flex;
+    }
+
+    .loginButton, .registerButton {
+        padding: 0.8rem 1rem;
+    }
+
+    .menuToggle {
+        display: flex;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0.8rem;
+    }
+
+    .logo {
+        max-width: 100px;
+        margin: 0.1rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navLinks li {
+        margin: 0.1rem;
+        font-size: 0.9rem;
+    }
+
+    .authLinks {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        margin: 0.1rem;
+    }
+
+    .loginButton, .registerButton {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        margin: 0.1rem;
+    }
+
+}

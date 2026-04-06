@@ -1,0 +1,103 @@
+.homeMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    gap: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: white;
+    margin: 2rem;
+}
+
+
+.homeTextSection {
+    border-radius: 8px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+
+.homeTextSection h1 {
+    font-size: 4rem; 
+    color: black; 
+    font-weight: bold; 
+    margin-bottom: 3rem;
+    line-height: 1.2;
+}
+
+
+.homeTextSection ul {
+    list-style: none;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
+}
+
+.homeTextSection li {
+    font-size: 1.2rem;
+    margin: 2rem 0;
+    color: var(--zinc-700);
+    line-height: 1.6;
+}
+
+.homeTextSection span {
+    color: var(--blue);
+    font-size: 1.5rem;
+}
+
+.homeTextSection h2 {
+    font-size: 1.5rem;
+    margin-top: 5rem;
+    color: var(--green);
+    transition: color 0.3s ease;
+}
+
+.homeTextSection h2:hover {
+    color: var(--blue); 
+}
+
+.homeImageSection img {
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.start {
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .homeMain {
+        flex-direction: column; 
+        padding: 2rem; 
+    }
+    .homeTextSection,
+    .homeImageSection {
+        width: 100%; 
+        margin-bottom: 2rem;
+    }
+
+    .homeTextSection h1 {
+        font-size: 2rem; 
+        color: black; 
+        font-weight: bold; 
+        margin-bottom: 1rem;
+    }
+
+    .homeTextSection li {
+        font-size: small;
+        margin: 0.2rem 0;
+    }
+
+    .homeTextSection h2 {
+        font-size: small;
+        margin: 0.5rem;
+    }
+
+    .homeTextSection {
+        border-radius: 8px;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+    }
+}

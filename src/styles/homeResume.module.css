@@ -1,0 +1,49 @@
+.containerSection {
+  border: 1px solid var(--zinc-400);
+  border-radius: 0.375rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  min-width: 300px;
+  max-width: 100%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 2em;
+}
+
+.formContainer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.formContainer .form {
+  border-radius: 0.375rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 2.5rem;
+}
+
+.resumeTitle {
+  margin: 0;
+  padding: 1rem 3rem 0.5rem 3rem;
+  color: var(--zinc-500);
+  font-size: 1.2rem;
+}
+
+.secundaryTitle {
+  font-size: x-large;
+}
+
+@media (max-width: 700px) {
+  .formContainer {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  .formContainer .form {
+    margin: 0.5rem;
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node"
+      }
+    ],
+    "env": {
+      "DATABASE_URL": "mysql://root:root123@localhost:3306/organiza",
+      "JWT_SECRET": "senhaDoJWTQueDeveriaSerBemForte"
+    },
+    "functions": {
+      "api/**/*.js": {
+        "runtime": "nodejs14.x"
+      }
+    }
+  }
+  

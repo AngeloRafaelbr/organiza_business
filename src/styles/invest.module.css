@@ -1,0 +1,84 @@
+/* Invest form */
+.investFormDiv {
+    padding: 1.5rem 3rem;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.investFormSection {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--zinc-400);
+    border-radius: 0.375rem;
+    max-width: 100%;
+}
+
+.investFormBt {
+    background-color: var(--green);
+    color: white;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    max-width: 20rem;
+}
+
+.investFormBt:hover {
+    background-color: var(--blue);
+    transition: 0.5s;
+}
+
+.investForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 10rem;
+    min-width: 5rem;
+    background-color: white;
+}
+/* Fim - Invest form */
+
+/* Layout para gráficos e formulário */
+.investsDiv {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte em telas pequenas */
+    padding: 2rem;
+}
+
+.investsDiv section {
+    flex: 1 1 45%; /* Ocupa até 45% da largura, com flexibilidade */
+    min-width: 300px; /* Largura mínima para garantir que o conteúdo não fique comprimido */
+}
+
+/* Estilos para o título */
+.investTitle, .investListTitle {
+    margin: 0;
+    padding: 1rem 3rem 0.5rem 3rem;
+    color: var(--zinc-500);
+    font-size: 1.2rem;
+}
+
+/* Layout responsivo */
+@media (max-width: 1024px) {
+    .investsDiv section {
+        flex: 1 1 100%; /* Em telas menores que 1024px, os itens ocupam 100% da largura */
+    }
+    .investTitle, .investListTitle {
+        margin: 0;
+        padding: 0.5rem;
+        color: var(--zinc-500);
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .investTitle, .investListTitle {
+        margin: 0;
+        padding: 0.5rem;
+        color: var(--zinc-500);
+        font-size: 0.8rem;
+    }
+}
