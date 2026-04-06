@@ -1,6 +1,7 @@
 // src/pages/api/budget/budgetFind.js
 
 import { PrismaClient } from '@prisma/client';
+import { requireAuth } from '@/middleware/auth';
 
 const prisma = new PrismaClient();
 
@@ -9,12 +10,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  try {
-    const { email } = req.query;
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
 
-    if (!email) {
-      return res.status(400).json({ error: 'Email é obrigatório' });
-    }
+  try {
+    const email = decoded.email; // email do usuário autenticado
 
     const existingUser = await prisma.user.findUnique({
       where: { email }

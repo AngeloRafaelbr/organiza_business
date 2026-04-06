@@ -9,6 +9,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
+
   try {
 
     //para debug (console aplicação node)
@@ -16,12 +20,7 @@ export default async function handler(req, res) {
     //console.log(req.body);
 
     const dadosBudget = req.body.dados;
-    const email = req.body.email;
-
-    // Verificação básica
-    if (!email) {
-      return res.status(400).json({ error: 'Email é obrigatório.' });
-    }
+    const email = decoded.email; // email do usuário autenticado
 
     if (!dadosBudget.category || !dadosBudget.plannedAmount) {
       return res.status(400).json({ error: 'Campos obrigatórios não preenchidos.' });

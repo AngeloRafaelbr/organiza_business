@@ -9,6 +9,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+    // MUDANÇA: valida o token e extrai o email de dentro dele
+    const decoded = requireAuth(req, res);
+    if (!decoded) return;
+
   try {
     //para debug (console aplicação node)
     //console.log("BODY RECEBIDO PARA DELETE:", req.body);
@@ -27,6 +31,16 @@ export default async function handler(req, res) {
     if (!budget) {
       return res.status(404).json({ error: 'Orçamento não encontrado.' });
     }
+
+      // MUDANÇA: busca o usuário pelo token e verifica se é dono do orçamento
+        const email = decoded.email; // email do usuário autenticado
+        const existingUser = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (budget.userId !== existingUser.id) {
+            return res.status(403).json({ error: 'Você não tem permissão para deletar este orçamento.' });
+        }
 
     // Deleta o orçamento
     await prisma.budget.delete({
