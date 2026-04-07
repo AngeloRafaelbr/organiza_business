@@ -1,6 +1,7 @@
 // src/pages/api/budget/budgetDelete.js
 
 import { PrismaClient } from '@prisma/client';
+import { requireAuth } from '@/middleware/auth';
 
 const prisma = new PrismaClient();
 

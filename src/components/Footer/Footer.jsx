@@ -33,7 +33,7 @@ export default function Footer() {
             </div>
 
             <div className={styles.copyright}>
-                    <p>© 2024 Organiza. Todos os direitos reservados.</p>
+                    <p>© 2026 Organiza. Todos os direitos reservados.</p>
                 </div>
         </footer>
     );
